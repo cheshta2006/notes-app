@@ -125,3 +125,16 @@ h2 {
         padding: 20px;
     }
 }
+
+.filter-section {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-section button {
+    width: auto;
+    padding: 12px 20px;
+}

@@ -1,11 +1,24 @@
 const form = document.getElementById("noteForm");
 const notesContainer = document.getElementById("notesContainer");
 
-async function loadNotes() {
-    const response = await fetch("/notes");
+async function loadNotes(date = "") {
+
+    let url = "/notes";
+
+    if (date) {
+        url += `?date=${date}`;
+    }
+
+    const response = await fetch(url);
     const notes = await response.json();
 
     notesContainer.innerHTML = "";
+
+    if (notes.length === 0) {
+        notesContainer.innerHTML =
+            "<h3>No notes found for selected date.</h3>";
+        return;
+    }
 
     notes.forEach((note, index) => {
         const div = document.createElement("div");
@@ -15,7 +28,8 @@ async function loadNotes() {
         div.innerHTML = `
             <h3>${note.date}</h3>
             <p>${note.note}</p>
-            <button class="delete-btn" onclick="deleteNote(${index})">
+            <button class="delete-btn"
+                onclick="deleteNote(${index})">
                 Delete
             </button>
         `;
@@ -51,3 +65,21 @@ async function deleteNote(id) {
 }
 
 loadNotes();
+
+document
+    .getElementById("filterBtn")
+    .addEventListener("click", () => {
+
+        const date =
+            document.getElementById("filterDate").value;
+
+        loadNotes(date);
+    });
+
+document
+    .getElementById("showAllBtn")
+    .addEventListener("click", () => {
+
+        document.getElementById("filterDate").value = "";
+        loadNotes();
+    });

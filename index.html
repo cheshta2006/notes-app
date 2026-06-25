@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Notes App</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>📝 Daily Notes App</h1>
@@ -14,6 +16,14 @@
             <button type="submit">Add Note</button>
         </form>
 
+        <h2>Filter Notes</h2>
+
+        <div class="filter-section">
+            <input type="date" id="filterDate">
+            <button type="button" id="filterBtn">Filter</button>
+            <button type="button" id="showAllBtn">Show All</button>
+        </div>
+
         <h2>Your Notes</h2>
 
         <div id="notesContainer"></div>
@@ -21,4 +31,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

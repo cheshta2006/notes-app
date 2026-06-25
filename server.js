@@ -7,17 +7,22 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Get all notes
 app.get("/notes", (req, res) => {
     if (!fs.existsSync("notes.json")) {
         return res.json([]);
     }
 
-    const notes = JSON.parse(fs.readFileSync("notes.json"));
+    let notes = JSON.parse(fs.readFileSync("notes.json"));
+
+    const date = req.query.date;
+
+    if (date) {
+        notes = notes.filter(note => note.date === date);
+    }
+
     res.json(notes);
 });
 
-// Add note
 app.post("/notes", (req, res) => {
     const note = req.body;
 
@@ -34,7 +39,6 @@ app.post("/notes", (req, res) => {
     res.json({ message: "Note added successfully" });
 });
 
-// Delete note
 app.delete("/notes/:id", (req, res) => {
     const id = parseInt(req.params.id);
 
